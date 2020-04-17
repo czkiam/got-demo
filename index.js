@@ -29,16 +29,10 @@ const statusCodeLogger = (response) => {
     return code[1].code === response.statusCode;
   });
 
-  const message = httpStatus[1].message;
-
-  if (response.statusCode >= 100 && response.statusCode < 200) {
-    console.log(`[Informational]: ${response.statusCode} - ${message}`);
-  } else if (response.statusCode >= 200 && response.statusCode < 300) {
-    console.log(`[Success]: ${response.statusCode}-${message}`);
-  } else if (response.statusCode >= 400 && response.statusCode < 500) {
-    console.log(`[Client Error]: ${response.statusCode}-${message}`);
-  } else if (response.statusCode >= 500 && response.statusCode < 600) {
-    console.log(`[Server Error]: ${response.statusCode}-${message}`);
+  if (httpStatus) {
+    const message = httpStatus[1].message;
+    const status = httpStatus[0];
+    console.log(`[${status}]: ${response.statusCode} - ${message}`);
   } else {
     console.log(`[unknown code]: ${response.statusCode}`);
   }
